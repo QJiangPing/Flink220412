@@ -49,3 +49,5 @@ object WordCountFromBatch {
     env.execute("Flink Batch Scala API Skeleton")
   }
 }
+
+//测试上传项目到GitHub
