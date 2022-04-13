@@ -16,38 +16,23 @@
  * limitations under the License.
  */
 
-package com.qjp.day1
+package com.qjp.day2
+
 import org.apache.flink.streaming.api.scala._
 
 
-object WordCountFromBatch {
-
-  case class WordWithCount(word: String, count: Int)
-  def main(args: Array[String]):Unit = {
-    // set up the batch execution environment
-    //val env = ExecutionEnvironment.getExecutionEnvironment
-    //获取运行时环境
+object ConsumeFromSensorSource {
+  def main(args: Array[String]): Unit = {
+    // set up the streaming execution environment
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    //设置分区（又叫并行任务）的数量为1
+
     env.setParallelism(1)
 
-    val stream = env.fromElements(
-      "hello world",
-      "hello world",
-      "hello world",
-      "hello qjp"
-    )
+    //调用addSource方法
+    val stream = env.addSource(new SensorSource)
 
-    val transformed = stream
-      //用空格进行分割，\\s是正则的语法，意思是space，空格的意思
-      .flatMap(line => line.split("\\s"))
-      .map(w => WordWithCount(w, 1))
-      .keyBy(0)
-      .sum(1)
-
-    transformed.print()
-
+    stream.print()
     // execute program
-    env.execute("Flink Batch Scala API Skeleton")
+    env.execute()
   }
 }

@@ -26,6 +26,7 @@ object WordCountFromSocket {
       //类似于MR中的map
       .map(w => WordWithCount(w, 1))
       //使用word字段进行分组，shuffle
+      //参数0表示使用样例类WordWithCount中的第0个字段进行keyby，下标从0开始，其实也就是第一个字段
       .keyBy(0)
       //开了一个5s的窗口
       .timeWindow(Time.seconds(5))
