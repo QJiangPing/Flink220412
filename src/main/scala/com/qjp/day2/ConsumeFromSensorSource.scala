@@ -32,7 +32,7 @@ object ConsumeFromSensorSource {
     val stream = env.addSource(new SensorSource)
 
     stream.print()
-    // execute program//
+    // execute program
     env.execute()
   }
 }
